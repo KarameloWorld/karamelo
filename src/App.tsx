@@ -1,34 +1,27 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import Layout from './components/Layout'
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <Layout>
+      <div className="space-y-6">
+        <h1 className="text-4xl font-bold text-pink-500 mb-8">Bienvenue sur Karamelo</h1>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {/* Card exemple */}
+          <div className="bg-gray-800/50 backdrop-blur-md rounded-lg p-6 hover:scale-105 transition-transform">
+            <h2 className="text-2xl font-semibold mb-4">Rechercher une chanson</h2>
+            <p className="text-gray-400">Trouvez votre chanson préférée parmi notre vaste catalogue</p>
+          </div>
+          <div className="bg-gray-800/50 backdrop-blur-md rounded-lg p-6 hover:scale-105 transition-transform">
+            <h2 className="text-2xl font-semibold mb-4">Mes Favoris</h2>
+            <p className="text-gray-400">Retrouvez toutes vos chansons préférées</p>
+          </div>
+          <div className="bg-gray-800/50 backdrop-blur-md rounded-lg p-6 hover:scale-105 transition-transform">
+            <h2 className="text-2xl font-semibold mb-4">Dernières Ajouts</h2>
+            <p className="text-gray-400">Découvrez les nouvelles chansons ajoutées</p>
+          </div>
+        </div>
       </div>
-      <h1 className="bg-red-100">Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    </Layout>
   )
 }
 
