@@ -20,12 +20,12 @@ const Button: FC<ButtonProps> = ({
 }) => {
   const isDisabled = disabled || loading;
   
-  const baseClasses = 'font-medium rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 disabled:opacity-50 disabled:cursor-not-allowed';
+  const baseClasses = 'font-medium rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-background disabled:opacity-50 disabled:cursor-not-allowed';
   
   const variantClasses = {
-    primary: 'bg-pink-500 hover:bg-pink-600 disabled:hover:bg-pink-500 text-white focus:ring-pink-500',
-    secondary: 'bg-gray-600 hover:bg-gray-700 disabled:hover:bg-gray-600 text-white focus:ring-gray-500',
-    danger: 'bg-red-500 hover:bg-red-600 disabled:hover:bg-red-500 text-white focus:ring-red-500'
+    primary: 'bg-primary hover:bg-primary/90 disabled:hover:bg-primary text-primary-foreground focus:ring-ring',
+    secondary: 'bg-secondary hover:bg-secondary/80 disabled:hover:bg-secondary text-secondary-foreground focus:ring-ring',
+    danger: 'bg-destructive hover:bg-destructive/90 disabled:hover:bg-destructive text-destructive-foreground focus:ring-ring'
   };
   
   const sizeClasses = {
@@ -45,7 +45,7 @@ const Button: FC<ButtonProps> = ({
       {...props}
     >
       {loading && (
-        <span className="mr-2 inline-block animate-spin rounded-full h-4 w-4 border-b-2 border-current" aria-hidden="true" />
+        <span className="mr-2 inline-block animate-spin rounded-full h-4 w-4 border-b-2 border-current opacity-70" aria-hidden="true" />
       )}
       {children}
     </button>

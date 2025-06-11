@@ -14,7 +14,7 @@ const Header: FC<HeaderProps> = ({
   onLogoutClick 
 }) => {
   return (
-    <header className={`bg-gray-800/80 backdrop-blur-md sticky top-0 z-50 ${className}`.trim()}>
+    <header className={`bg-card/80 backdrop-blur-md border-b border-border sticky top-0 z-50 shadow-sm ${className}`.trim()}>
       <nav className="container mx-auto px-4 py-4" role="navigation" aria-label="Navigation principale">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-4">

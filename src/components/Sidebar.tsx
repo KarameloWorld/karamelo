@@ -17,12 +17,12 @@ const Sidebar: FC<SidebarProps> = ({
 }) => {
   return (
     <aside 
-      className={`md:col-span-1 bg-gray-800/50 backdrop-blur-md rounded-lg p-6 sticky top-16 ${className}`.trim()}
+      className={`md:col-span-1 bg-sidebar border border-sidebar-border rounded-lg p-6 sticky top-16 shadow-md ${className}`.trim()}
       role="complementary"
       aria-label="Catégories musicales"
     >
       <div className="space-y-4">
-        <h2 className="text-xl font-semibold" id="categories-heading">
+        <h2 className="text-xl font-semibold text-sidebar-foreground" id="categories-heading">
           Catégories
         </h2>
         <nav className="space-y-2" role="navigation" aria-labelledby="categories-heading">
