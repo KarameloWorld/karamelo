@@ -1,7 +1,7 @@
-"use client"
+"use client";
 
-import KaraokeDashboard from "../dashboard"
+import KaraokeDashboard from "../components/business/dashboard";
 
 export default function Page() {
-  return <KaraokeDashboard />
+  return <KaraokeDashboard />;
 }

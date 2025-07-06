@@ -1,6 +1,59 @@
-# React + TypeScript + Vite
+# Karamelo Front - React + TypeScript + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is a karaoke application built with React, TypeScript, and Vite. It includes a comprehensive testing setup with Vitest for unit tests and Playwright for end-to-end testing.
+
+## Features
+
+- ⚡️ **Vite** - Fast build tool and dev server
+- ⚛️ **React 19** - Latest React with modern features
+- 🔷 **TypeScript** - Type safety and better developer experience
+- 🎨 **Tailwind CSS** - Utility-first CSS framework
+- 🧪 **Vitest** - Fast unit testing with React Testing Library
+- 🎭 **Playwright** - Reliable end-to-end testing
+- 📏 **ESLint & Prettier** - Code linting and formatting
+- 🐕 **Husky** - Git hooks for code quality
+
+## Quick Start
+
+```bash
+# Install dependencies
+pnpm install
+
+# Start development server
+pnpm dev
+
+# Run tests
+pnpm test
+
+# Run E2E tests
+pnpm test:e2e
+```
+
+## Testing
+
+This project includes a comprehensive testing setup. See [TESTING.md](./TESTING.md) for detailed information about:
+
+- Unit and component testing with Vitest
+- End-to-end testing with Playwright
+- Testing best practices and examples
+- CI/CD integration
+
+### Available Test Commands
+
+```bash
+# Unit tests
+pnpm test              # Run in watch mode
+pnpm test:run          # Run once
+pnpm test:ui           # Run with UI
+pnpm test:coverage     # Run with coverage
+
+# E2E tests
+pnpm test:e2e          # Run E2E tests
+pnpm test:e2e:ui       # Run with Playwright UI
+pnpm test:e2e:headed   # Run in headed mode
+```
+
+## Development
 
 Currently, two official plugins are available:
 
@@ -34,7 +87,7 @@ export default tseslint.config({
 You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
 
 ```js
-// eslint.config.js
+// eslint.config.mjs
 import reactX from 'eslint-plugin-react-x'
 import reactDom from 'eslint-plugin-react-dom'
 
