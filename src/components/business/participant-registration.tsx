@@ -8,7 +8,6 @@ import {
   Star,
   Zap,
   ArrowRight,
-  Check,
   Calendar,
   Users,
   Play,
@@ -30,6 +29,7 @@ import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { useKaraokeData } from "../../hooks/use-karaoke-data";
+import { useCustomAlert } from "@/components/custom-alert";
 
 // Données de démonstration
 const currentEvent = {
@@ -49,6 +49,7 @@ export default function ParticipantRegistration() {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedGenre, setSelectedGenre] = useState("Tous");
   const { songs, addParticipant } = useKaraokeData();
+  const { showAlert, AlertComponent } = useCustomAlert();
 
   const [participant, setParticipant] = useState({
     name: "",
@@ -116,11 +117,18 @@ export default function ParticipantRegistration() {
       addParticipant(newParticipant);
     }
 
-    // Redirection vers une page de suivi ou dashboard
-    alert(
-      "Inscription réussie ! Vous êtes maintenant dans la file d'attente. 🎵",
+    // Afficher l'alerte de succès
+    showAlert(
+      "success",
+      "Inscription réussie ! 🎵",
+      "Vous êtes maintenant dans la file d'attente. Vous serez redirigé vers la page de suivi.",
+      {
+        confirmText: "Voir ma position",
+        onConfirm: () => {
+          window.location.href = "/participant-queue";
+        },
+      },
     );
-    window.location.href = "/participant-queue";
   };
 
   return (
@@ -446,18 +454,7 @@ export default function ParticipantRegistration() {
 
         {/* Étape 3: Confirmation */}
         {step === 3 && selectedSong && (
-          <Card className="bg-black/20 backdrop-blur-sm border-white/10 max-w-md mx-auto">
-            <CardHeader className="text-center">
-              <div className="bg-green-500/20 rounded-full p-4 w-16 h-16 mx-auto mb-4 flex items-center justify-center">
-                <Check className="h-8 w-8 text-green-400" />
-              </div>
-              <CardTitle className="text-2xl text-white">
-                Inscription confirmée !
-              </CardTitle>
-              <CardDescription className="text-purple-200">
-                Vous êtes maintenant dans la file d'attente
-              </CardDescription>
-            </CardHeader>
+          <Card className="bg-black/20 backdrop-blur-sm border-white/10 max-w-md mx-auto py-6">
             <CardContent className="space-y-6">
               <div className="bg-gradient-to-r from-purple-500/20 to-pink-500/20 rounded-lg p-4">
                 <div className="flex items-center space-x-4">
@@ -538,7 +535,7 @@ export default function ParticipantRegistration() {
                 </Button>
                 <Button
                   variant="outline"
-                  className="w-full border-purple-500/30 text-purple-300 hover:bg-purple-500/20 hover:text-white"
+                  className="w-full bg-gradient-to-br border-purple-500/30 text-purple-300 hover:bg-purple-500/20 hover:text-white"
                   onClick={() => {
                     setStep(2);
                     setSelectedSong(null);
@@ -548,7 +545,7 @@ export default function ParticipantRegistration() {
                 </Button>
                 <Button
                   variant="outline"
-                  className="border-purple-500/30 text-purple-300 hover:bg-purple-500/20 hover:text-white"
+                  className="border-purple-500/30 bg-indigo-700 text-purple-300 hover:bg-purple-500/20 hover:text-white"
                   onClick={() => (window.location.href = "/register")}
                 >
                   <ArrowLeft className="h-4 w-4 mr-2" />
@@ -582,6 +579,8 @@ export default function ParticipantRegistration() {
           </CardContent>
         </Card>
       </div>
+
+      <AlertComponent />
     </div>
   );
 }

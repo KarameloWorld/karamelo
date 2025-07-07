@@ -4,10 +4,10 @@ test.describe("Dashboard Flow", () => {
   test.beforeEach(async ({ page }) => {
     // Login first
     await page.goto("/login");
-    await page.getByLabel("Email").fill("bar@karaobar.com");
+    await page.getByLabel("Email").fill("bar@karamelo.com");
     await page.getByLabel("Mot de passe").fill("bar123");
     await page.getByRole("button", { name: "Se connecter" }).click();
-    await expect(page).toHaveURL("/dashboard");
+    await expect(page).toHaveURL("/");
   });
 
   test("should display dashboard after login", async ({ page }) => {

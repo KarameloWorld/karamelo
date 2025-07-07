@@ -9,7 +9,7 @@ export default function LoginHelper() {
   return (
     <div className="space-y-4">
       {/* Identifiants Bar */}
-      <Card className="bg-gradient-to-r from-pink-500/20 to-purple-600/20 backdrop-blur-sm border-pink-500/30">
+      <Card className="bg-gradient-to-r from-pink-500 to-purple-600 backdrop-blur-sm border-pink-500/30">
         <CardContent className="p-4">
           <div className="flex items-center space-x-3">
             <User className="h-5 w-5 text-pink-400" />
@@ -17,7 +17,7 @@ export default function LoginHelper() {
               <h3 className="text-white font-semibold">🏪 Connexion Bar</h3>
               <div className="space-y-1 text-sm">
                 <p className="text-pink-200">
-                  <strong>Email:</strong> bar@karaobar.com
+                  <strong>Email:</strong> bar@karamelo.com
                 </p>
                 <p className="text-pink-200">
                   <strong>Mot de passe:</strong> bar123
@@ -39,7 +39,7 @@ export default function LoginHelper() {
               </h3>
               <div className="space-y-1 text-sm">
                 <p className="text-orange-200">
-                  <strong>Email:</strong> admin@karaobar.com
+                  <strong>Email:</strong> admin@karamelo.com
                 </p>
                 <p className="text-orange-200">
                   <strong>Mot de passe:</strong> admin123

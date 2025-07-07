@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import {
   Calendar,
@@ -8,16 +8,11 @@ import {
   Users,
   Mic,
   Play,
-  Pause,
-  SkipForward,
-  Volume2,
   UserPlus,
   Clock,
   Star,
-  Heart,
   Zap,
   User,
-  RefreshCw,
   LogOut,
 } from "lucide-react";
 
@@ -44,26 +39,25 @@ import {
 import { useKaraokeData } from "../../hooks/use-karaoke-data";
 import { useAuth } from "../auth";
 
-// Données de démonstration avec vraies URLs YouTube Karaoké
 const participants = [
   {
     id: 1,
-    name: "Marie Dubois",
+    name: "Gitlaume Merge-tain",
     songs: 3,
     status: "En cours",
-    avatar: "/placeholder.svg?height=32&width=32",
+    avatar: "/monkey.svg?height=32&width=32",
     song: {
-      title: "WITH ALL I AM",
-      artist: "Hillsong",
-      youtubeId: "zmt0YVQatQM",
+      title: "Shallow",
+      artist: "Lady Gaga & Bradley Cooper",
+      youtubeId: "smu-0V7E7wI",
     },
   },
   {
     id: 2,
-    name: "Jean Martin",
+    name: "DotNet.cien Du.Point",
     songs: 2,
     status: "En attente",
-    avatar: "/placeholder.svg?height=32&width=32",
+    avatar: "/monkey.svg?height=32&width=32",
     song: {
       title: "Sweet Caroline",
       artist: "Neil Diamond",
@@ -72,10 +66,10 @@ const participants = [
   },
   {
     id: 3,
-    name: "Sophie Chen",
+    name: "Ajax Bernhard Reset",
     songs: 1,
     status: "En attente",
-    avatar: "/placeholder.svg?height=32&width=32",
+    avatar: "/monkey.svg?height=32&width=32",
     song: {
       title: "Don't Stop Me Now",
       artist: "Queen",
@@ -84,10 +78,10 @@ const participants = [
   },
   {
     id: 4,
-    name: "Alex Rivera",
+    name: "JSON.ph Le-Roy",
     songs: 2,
     status: "En attente",
-    avatar: "/placeholder.svg?height=32&width=32",
+    avatar: "/monkey.svg?height=32&width=32",
     song: {
       title: "I Will Survive",
       artist: "Gloria Gaynor",
@@ -96,11 +90,23 @@ const participants = [
   },
   {
     id: 5,
-    name: "Pierre Durant",
+    name: "Melan.py Debug-bois",
     songs: 0,
     status: "Terminé",
-    avatar: "/placeholder.svg?height=32&width=32",
+    avatar: "/monkey.svg?height=32&width=32",
     song: null,
+  },
+  {
+    id: 6,
+    name: "PullAndRé Base.commit",
+    songs: 1,
+    status: "En cours",
+    avatar: "/monkey.svg?height=32&width=32",
+    song: {
+      title: "Bohemian Rhapsody",
+      artist: "Queen",
+      youtubeId: "fJ9rUzIMcZQ",
+    },
   },
 ];
 
@@ -125,7 +131,7 @@ const currentSong = currentParticipant
       youtubeId: currentParticipant.song?.youtubeId || "qQzdAsjWGPg",
       duration: 275,
       currentTime: 120,
-      image: "/placeholder.svg?height=60&width=60",
+      image: "/monkey.svg?height=60&width=60",
     }
   : {
       title: "Aucune chanson en cours",
@@ -134,18 +140,77 @@ const currentSong = currentParticipant
       youtubeId: "qQzdAsjWGPg",
       duration: 275,
       currentTime: 0,
-      image: "/placeholder.svg?height=60&width=60",
+      image: "/monkey.svg?height=60&width=60",
     };
 
 export default function KaraokeDashboard() {
   const [activeTab, setActiveTab] = useState("live");
   const { songs } = useKaraokeData();
   const { logout } = useAuth();
+  const [showMonkey, setShowMonkey] = useState(false);
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [isCtrlPressed, setIsCtrlPressed] = useState(false);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Control") {
+        setIsCtrlPressed(true);
+      }
+    };
+
+    const handleKeyUp = (e: KeyboardEvent) => {
+      if (e.key === "Control") {
+        setIsCtrlPressed(false);
+        setShowMonkey(false);
+      }
+    };
+
+    const handleMouseMove = (e: MouseEvent) => {
+      const x = e.clientX;
+      const y = e.clientY;
+      setMousePosition({ x, y });
+
+      // Vérifier si Ctrl est pressé (sur toute la page)
+      if (isCtrlPressed) {
+        setShowMonkey(true);
+      } else {
+        setShowMonkey(false);
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    window.addEventListener("keyup", handleKeyUp);
+    window.addEventListener("mousemove", handleMouseMove);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+      window.removeEventListener("keyup", handleKeyUp);
+      window.removeEventListener("mousemove", handleMouseMove);
+    };
+  }, [isCtrlPressed]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900">
+    <div className="min-h-screen bg-indigo-950 relative">
+      {/* Easter Egg - Monkey Image */}
+      {showMonkey && (
+        <div
+          className="fixed z-50 pointer-events-none transition-all duration-300"
+          style={{
+            left: mousePosition.x - 100,
+            top: mousePosition.y - 100,
+          }}
+        >
+          <Image
+            src="/monkey.jpeg"
+            alt="Easter Egg Monkey"
+            width={200}
+            height={200}
+            className="rounded-full border-4 border-yellow-400 shadow-lg animate-bounce"
+          />
+        </div>
+      )}
       {/* Header */}
-      <header className="bg-black/20 backdrop-blur-sm border-b border-white/10">
+      <header className="bg-black/20 backdrop-blur-sm border-b border-pink-500">
         <div className="container mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
@@ -154,7 +219,7 @@ export default function KaraokeDashboard() {
               </div>
               <div>
                 <h1 className="text-2xl font-bold text-white">
-                  KaraoBar Dashboard
+                  KaraMelo Dashboard
                 </h1>
                 <p className="text-purple-200">
                   Bar Le Melody - Soirée du 15 Décembre
@@ -168,16 +233,7 @@ export default function KaraokeDashboard() {
               </Badge>
               <Button
                 variant="outline"
-                size="sm"
-                className="border-purple-500/30 text-purple-500 hover:bg-purple-300 hover:text-white"
-                onClick={() => window.location.reload()}
-              >
-                <RefreshCw className="h-3 w-3 mr-1" />
-                Actualiser
-              </Button>
-              <Button
-                variant="outline"
-                className="border-purple-500/30 text-purple-600 hover:bg-purple-500/20 hover:text-white"
+                className="border-purple-500 text-white bg-purple-500 hover:bg-purple-500/20 hover:text-white"
                 onClick={() => {
                   window.location.href = "/admin-login";
                 }}
@@ -187,7 +243,7 @@ export default function KaraokeDashboard() {
               </Button>
               <Button
                 variant="outline"
-                className="border-red-500/30 text-red-400 hover:bg-red-500/20 hover:text-white"
+                className="border-red-500 text-white hover:bg-red-500/20 hover:text-white bg-red-500"
                 onClick={logout}
               >
                 <LogOut className="h-4 w-4 mr-2" />
@@ -204,7 +260,7 @@ export default function KaraokeDashboard() {
           onValueChange={setActiveTab}
           className="space-y-6"
         >
-          <TabsList className="bg-black/20 backdrop-blur-sm border border-white/10">
+          <TabsList className="bg-pink-500/30 backdrop-blur-sm border border-pink-500">
             <TabsTrigger
               value="live"
               className="data-[state=active]:bg-purple-600 data-[state=active]:text-white"
@@ -239,7 +295,7 @@ export default function KaraokeDashboard() {
           <TabsContent value="live" className="space-y-6">
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
               {/* Lecteur YouTube Karaoké */}
-              <Card className="lg:col-span-2 bg-black/20 backdrop-blur-sm border-white/10 text-white">
+              <Card className="lg:col-span-2 bg-pink-500/10 backdrop-blur-sm border-pink-500 text-white">
                 <CardHeader>
                   <CardTitle className="flex items-center justify-between">
                     <span className="flex items-center">
@@ -267,7 +323,7 @@ export default function KaraokeDashboard() {
                   {/* Informations de la chanson */}
                   <div className="flex items-center space-x-4">
                     <Image
-                      src={currentSong.image || "/placeholder.svg"}
+                      src={currentSong.image || "/monkey.svg"}
                       alt="Album cover"
                       width={64}
                       height={64}
@@ -280,7 +336,7 @@ export default function KaraokeDashboard() {
                       <p className="text-purple-200">{currentSong.artist}</p>
                       <div className="flex items-center mt-2">
                         <Avatar className="h-6 w-6 mr-2">
-                          <AvatarImage src="/placeholder.svg?height=24&width=24" />
+                          <AvatarImage src="/monkey.svg" />
                           <AvatarFallback className="bg-pink-500 text-white text-xs">
                             MD
                           </AvatarFallback>
@@ -290,42 +346,6 @@ export default function KaraokeDashboard() {
                         </span>
                       </div>
                     </div>
-                  </div>
-
-                  {/* Contrôles simplifiés */}
-                  <div className="flex items-center justify-center space-x-4">
-                    <Button
-                      variant="outline"
-                      size="icon"
-                      className="border-purple-500/30 text-purple-600 hover:bg-purple-500/10 hover:text-purple-200"
-                      onClick={() => {
-                        // Passer à la chanson suivante
-                        console.log("Chanson suivante");
-                      }}
-                    >
-                      <SkipForward className="h-4 w-4" />
-                    </Button>
-                    <Button
-                      size="icon"
-                      className="bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700"
-                      onClick={() => {
-                        // Contrôle du volume ou plein écran
-                        console.log("Contrôles YouTube");
-                      }}
-                    >
-                      <Volume2 className="h-5 w-5" />
-                    </Button>
-                    <Button
-                      variant="outline"
-                      size="icon"
-                      className="border-purple-500/30 text-purple-600 hover:bg-purple-500/10 hover:text-purple-200"
-                      onClick={() => {
-                        // Arrêter la chanson actuelle
-                        console.log("Arrêter");
-                      }}
-                    >
-                      <Pause className="h-4 w-4" />
-                    </Button>
                   </div>
 
                   {/* Informations supplémentaires */}
@@ -343,7 +363,7 @@ export default function KaraokeDashboard() {
               </Card>
 
               {/* File d'attente */}
-              <Card className="bg-black/20 backdrop-blur-sm border-white/10 text-white">
+              <Card className="bg-black/20 backdrop-blur-sm border-pink-500 text-white">
                 <CardHeader>
                   <CardTitle className="flex items-center justify-between">
                     <span className="flex items-center">
@@ -509,19 +529,19 @@ export default function KaraokeDashboard() {
                 </CardContent>
               </Card>
 
-              <Card className="bg-gradient-to-r from-yellow-500/20 to-orange-600/20 backdrop-blur-sm border-yellow-500/30">
+              <Card className="bg-gradient-to-r from-blue-500/20 to-orange-600/20 backdrop-blur-sm border-blue-500/30">
                 <CardContent className="p-4">
                   <div className="flex items-center justify-between">
                     <div>
-                      <p className="text-yellow-500 text-sm">Terminés</p>
-                      <p className="text-2xl font-bold text-yellow-500">
+                      <p className="text-blue-500 text-sm">Terminés</p>
+                      <p className="text-2xl font-bold text-blue-500">
                         {
                           participants.filter((p) => p.status === "Terminé")
                             .length
                         }
                       </p>
                     </div>
-                    <Star className="h-8 w-8 text-yellow-400" />
+                    <Star className="h-8 w-8 text-blue-400" />
                   </div>
                 </CardContent>
               </Card>
@@ -534,17 +554,22 @@ export default function KaraokeDashboard() {
               <h2 className="text-2xl font-bold text-white">
                 Gestion des participants
               </h2>
-              <Button className="bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700">
+              <Button
+                className="bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700"
+                onClick={() => {
+                  window.location.href = "/register";
+                }}
+              >
                 <UserPlus className="h-4 w-4 mr-2" />
                 Nouveau participant
               </Button>
             </div>
 
-            <Card className="bg-black/20 backdrop-blur-sm border-white/10">
+            <Card className="bg-black/20 backdrop-blur-sm border-pink-500">
               <CardContent className="p-0">
                 <Table>
                   <TableHeader>
-                    <TableRow className="border-white/10">
+                    <TableRow className="border-pink-500">
                       <TableHead className="text-purple-200">
                         Participant
                       </TableHead>
@@ -552,20 +577,19 @@ export default function KaraokeDashboard() {
                         Chansons
                       </TableHead>
                       <TableHead className="text-purple-200">Statut</TableHead>
-                      <TableHead className="text-purple-200">Actions</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
                     {participants.map((participant) => (
                       <TableRow
                         key={participant.id}
-                        className="border-white/10 hover:bg-white/5"
+                        className="border-pink-500 hover:bg-white/5"
                       >
                         <TableCell>
                           <div className="flex items-center space-x-3">
                             <Avatar>
                               <AvatarImage
-                                src={participant.avatar || "/placeholder.svg"}
+                                src={participant.avatar || "/monkey.svg"}
                               />
                               <AvatarFallback className="bg-purple-600 text-white">
                                 {participant.name
@@ -598,24 +622,6 @@ export default function KaraokeDashboard() {
                             {participant.status}
                           </Badge>
                         </TableCell>
-                        <TableCell>
-                          <div className="flex space-x-2">
-                            <Button
-                              variant="outline"
-                              size="sm"
-                              className="border-purple-500/30 text-purple-600 hover:bg-purple-500/20 hover:text-white"
-                            >
-                              Voir
-                            </Button>
-                            <Button
-                              variant="outline"
-                              size="sm"
-                              className="border-purple-500/30 text-purple-600 hover:bg-purple-500/20 hover:text-white"
-                            >
-                              Modifier
-                            </Button>
-                          </div>
-                        </TableCell>
                       </TableRow>
                     ))}
                   </TableBody>
@@ -633,8 +639,7 @@ export default function KaraokeDashboard() {
               <Button
                 className="bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700"
                 onClick={() => {
-                  window.history.pushState({}, "", "/add-song");
-                  window.dispatchEvent(new PopStateEvent("popstate"));
+                  window.location.href = "/add-song";
                 }}
               >
                 <Music className="h-4 w-4 mr-2" />
@@ -642,11 +647,11 @@ export default function KaraokeDashboard() {
               </Button>
             </div>
 
-            <Card className="bg-black/20 backdrop-blur-sm border-white/10">
+            <Card className="bg-black/20 backdrop-blur-sm border-pink-500">
               <CardContent className="p-0">
                 <Table>
                   <TableHeader>
-                    <TableRow className="border-white/10">
+                    <TableRow className="border-pink-500">
                       <TableHead className="text-purple-200">Titre</TableHead>
                       <TableHead className="text-purple-200">Artiste</TableHead>
                       <TableHead className="text-purple-200">Genre</TableHead>
@@ -660,7 +665,7 @@ export default function KaraokeDashboard() {
                     {songs.map((song) => (
                       <TableRow
                         key={song.id}
-                        className="border-white/10 hover:bg-white/5"
+                        className="border-pink-500 hover:bg-white/5"
                       >
                         <TableCell className="text-white font-medium">
                           {song.title}
@@ -702,16 +707,6 @@ export default function KaraokeDashboard() {
                             >
                               <Play className="h-3 w-3" />
                             </Button>
-                            <Button
-                              variant="outline"
-                              size="sm"
-                              className="border-purple-500/30 text-purple-600 hover:bg-purple-500/20 hover:text-white"
-                              onClick={() => {
-                                console.log("Ajouter aux favoris");
-                              }}
-                            >
-                              <Heart className="h-3 w-3" />
-                            </Button>
                           </div>
                         </TableCell>
                       </TableRow>
@@ -738,22 +733,22 @@ export default function KaraokeDashboard() {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              <Card className="bg-gradient-to-br from-green-500/20 to-emerald-600/20 backdrop-blur-sm border-green-500/30">
+              <Card className="bg-gradient-to-br from-purple-500/20 to-pink-800/20 backdrop-blur-sm border-green-500/30">
                 <CardHeader>
                   <div className="flex items-center justify-between">
-                    <CardTitle className="text-green-700">
+                    <CardTitle className="text-white">
                       Soirée Actuelle
                     </CardTitle>
                     <Badge className="bg-green-500/20 text-green-500 border-green-500">
                       En cours
                     </Badge>
                   </div>
-                  <CardDescription className="text-black">
+                  <CardDescription className="text-white">
                     15 Décembre 2024
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <div className="space-y-2 text-black">
+                  <div className="space-y-2 text-white">
                     <p>
                       <strong>Thème:</strong> Hits des années 80
                     </p>
@@ -770,7 +765,7 @@ export default function KaraokeDashboard() {
                 </CardContent>
               </Card>
 
-              <Card className="bg-black/20 backdrop-blur-sm border-white/10">
+              <Card className="bg-black/20 backdrop-blur-sm border-pink-500">
                 <CardHeader>
                   <CardTitle className="text-white">Prochaine Soirée</CardTitle>
                   <CardDescription className="text-purple-200">
@@ -795,7 +790,7 @@ export default function KaraokeDashboard() {
                 </CardContent>
               </Card>
 
-              <Card className="bg-black/20 backdrop-blur-sm border-white/10">
+              <Card className="bg-black/20 backdrop-blur-sm border-pink-500">
                 <CardHeader>
                   <CardTitle className="text-white">Soirée Planifiée</CardTitle>
                   <CardDescription className="text-purple-200">
