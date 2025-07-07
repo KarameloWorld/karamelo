@@ -28,16 +28,7 @@ RUN corepack enable pnpm
 
 # Copy dependencies from deps stage
 COPY --from=deps /app/node_modules ./node_modules
-
-# Copy specific files and directories (avoid copying sensitive data)
-COPY package.json pnpm-lock.yaml* ./
-COPY next.config.ts ./
-COPY tailwind.config.ts ./
-COPY tsconfig.json ./
-COPY postcss.config.mjs ./
-COPY src/ ./src/
-COPY public/ ./public/
-COPY sentry.*.config.ts ./
+COPY . .
 
 # Build arguments for Sentry (non-sensitive only)
 ARG SENTRY_ORG
