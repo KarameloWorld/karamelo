@@ -1,5 +1,5 @@
-import SongManagement from "../../song-management"
+import SongManagement from "../../components/business/song-management";
 
 export default function SongsPage() {
-  return <SongManagement />
+  return <SongManagement />;
 }

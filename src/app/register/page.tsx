@@ -1,5 +1,5 @@
-import ParticipantRegistration from "../../participant-registration"
+import ParticipantRegistration from "../../components/business/participant-registration";
 
 export default function RegisterPage() {
-  return <ParticipantRegistration />
+  return <ParticipantRegistration />;
 }

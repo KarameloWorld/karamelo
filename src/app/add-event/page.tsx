@@ -1,5 +1,5 @@
-import AddEventForm from "../../add-event-form"
+import AddEventForm from "../../components/business/add-event-form";
 
 export default function AddEventPage() {
-  return <AddEventForm />
+  return <AddEventForm />;
 }
