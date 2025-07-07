@@ -14,7 +14,7 @@ ENV PATH="$PNPM_HOME:$PATH"
 RUN corepack enable pnpm
 
 # Copy package files
-COPY package.json pnpm-lock.yaml ./
+COPY package.json ./
 RUN pnpm install
 
 # Rebuild the source code only when needed
@@ -70,9 +70,6 @@ RUN mkdir .next && chown nextjs:nodejs .next && chmod 755 .next
 # https://nextjs.org/docs/advanced-features/output-file-tracing
 COPY --from=builder --chown=nextjs:nodejs --chmod=644 /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs --chmod=644 /app/.next/static ./.next/static
-
-# Ensure server.js is executable
-RUN chmod +x server.js
 
 USER nextjs
 
