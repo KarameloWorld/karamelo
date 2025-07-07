@@ -1,0 +1,14 @@
+services:
+  web:
+    image: node:22-slim
+    ports:
+      - '3000:3000'
+    volumes:
+      - .:/home/node/app
+    working_dir: /home/node/app/
+    environment:
+      - PNPM_HOME=/pnpm
+      - PATH=/pnpm:$PATH
+    env_file:
+      - .env
+    command: sh -c "corepack enable && pnpm install && pnpm dev"
