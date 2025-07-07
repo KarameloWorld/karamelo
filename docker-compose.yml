@@ -1,14 +1,24 @@
 services:
   web:
-    image: node:22-slim
+    image: node:22-alpine
     ports:
       - '3000:3000'
     volumes:
       - .:/home/node/app
-    working_dir: /home/node/app/
-    environment:
-      - PNPM_HOME=/pnpm
-      - PATH=/pnpm:$PATH
+      - /home/node/app/node_modules
+      - pnpm-cache:/home/node/.local/share/pnpm
+    working_dir: /home/node/app
     env_file:
       - .env
-    command: sh -c "corepack enable && pnpm install && pnpm dev"
+    command: >
+      sh -c "
+        echo 'Enabling pnpm...' &&
+        corepack enable pnpm &&
+        echo 'Installing dependencies...' &&
+        pnpm install --frozen-lockfile &&
+        echo 'Starting development server...' &&
+        pnpm dev
+      "
+
+volumes:
+  pnpm-cache:
