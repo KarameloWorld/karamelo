@@ -6,6 +6,10 @@ import { useState } from "react";
 import { Music, Youtube, Save, X, Play, Search, Star } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Badge } from "@/components/ui/badge";
+import { Textarea } from "@/components/ui/textarea";
 import {
   Card,
   CardContent,
@@ -13,10 +17,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Badge } from "@/components/ui/badge";
-import { Textarea } from "@/components/ui/textarea";
+import { useCustomAlert } from "@/components/custom-alert";
 
 interface Song {
   title: string;
@@ -37,6 +38,7 @@ interface AddSongFormProps {
 
 export default function AddSongForm({ onClose, onSave }: AddSongFormProps) {
   const [isLoading, setIsLoading] = useState(false);
+  const { showAlert, AlertComponent } = useCustomAlert();
   const [songData, setSongData] = useState({
     title: "",
     artist: "",
@@ -78,8 +80,17 @@ export default function AddSongForm({ onClose, onSave }: AddSongFormProps) {
       console.log("Chanson ajoutée:", finalSongData);
 
       // Redirection vers le dashboard
-      alert("Chanson ajoutée avec succès ! 🎵");
-      window.location.href = "/dashboard";
+      showAlert(
+        "success",
+        "Chanson ajoutée avec succès ! 🎵",
+        "La chanson a été ajoutée à votre bibliothèque et est maintenant disponible pour les participants.",
+        {
+          confirmText: "Voir le dashboard",
+          onConfirm: () => {
+            window.location.href = "/";
+          },
+        },
+      );
     }, 2000);
   };
 
@@ -404,6 +415,8 @@ export default function AddSongForm({ onClose, onSave }: AddSongFormProps) {
           </Card>
         )}
       </div>
+
+      <AlertComponent />
     </div>
   );
 }

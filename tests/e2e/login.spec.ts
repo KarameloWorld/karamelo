@@ -6,7 +6,7 @@ test.describe("Login Flow", () => {
   });
 
   test("should display login form", async ({ page }) => {
-    await expect(page.getByText("KaraoBar")).toBeVisible();
+    await expect(page.getByText("KaraMelo")).toBeVisible();
     await expect(page.getByText("Connexion Établissement")).toBeVisible();
     await expect(page.getByLabel("Email de l'établissement")).toBeVisible();
     await expect(page.getByLabel("Mot de passe")).toBeVisible();
@@ -41,7 +41,7 @@ test.describe("Login Flow", () => {
     const passwordInput = page.getByLabel("Mot de passe");
     const submitButton = page.getByRole("button", { name: "Se connecter" });
 
-    await emailInput.fill("bar@karaobar.com");
+    await emailInput.fill("bar@karamelo.com");
     await passwordInput.fill("bar123");
     await submitButton.click();
 
@@ -50,7 +50,7 @@ test.describe("Login Flow", () => {
     await expect(submitButton).toBeDisabled();
 
     // Should redirect to dashboard
-    await expect(page).toHaveURL("/dashboard");
+    await expect(page).toHaveURL("/");
   });
 
   test("should handle failed login", async ({ page }) => {
@@ -127,7 +127,7 @@ test.describe("Login Flow", () => {
     const emailInput = page.getByLabel("Email de l'établissement");
     const passwordInput = page.getByLabel("Mot de passe");
 
-    await emailInput.fill("bar@karaobar.com");
+    await emailInput.fill("bar@karamelo.com");
     await passwordInput.fill("bar123");
     await passwordInput.press("Enter");
 
@@ -135,7 +135,7 @@ test.describe("Login Flow", () => {
     await expect(page.getByText("Connexion...")).toBeVisible();
 
     // Should redirect to dashboard
-    await expect(page).toHaveURL("/dashboard");
+    await expect(page).toHaveURL("/");
   });
 
   test("should persist login state", async ({ page, context }) => {
@@ -143,18 +143,18 @@ test.describe("Login Flow", () => {
     const passwordInput = page.getByLabel("Mot de passe");
     const submitButton = page.getByRole("button", { name: "Se connecter" });
 
-    await emailInput.fill("bar@karaobar.com");
+    await emailInput.fill("bar@karamelo.com");
     await passwordInput.fill("bar123");
     await submitButton.click();
 
     // Wait for redirect
-    await expect(page).toHaveURL("/dashboard");
+    await expect(page).toHaveURL("/");
 
     // Open new page in same context
     const newPage = await context.newPage();
-    await newPage.goto("/dashboard");
+    await newPage.goto("/");
 
     // Should remain logged in
-    await expect(newPage).toHaveURL("/dashboard");
+    await expect(newPage).toHaveURL("/");
   });
 });

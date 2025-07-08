@@ -1,16 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import {
-  Clock,
-  Music,
-  Users,
-  Mic,
-  Play,
-  Star,
-  ArrowLeft,
-  RefreshCw,
-} from "lucide-react";
+import { Clock, Music, Users, Mic, Play, Star, ArrowLeft } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -27,7 +18,7 @@ import { useKaraokeData } from "../../hooks/use-karaoke-data";
 
 export default function ParticipantQueue() {
   const { participants, songs } = useKaraokeData();
-  const [currentTime, setCurrentTime] = useState(new Date());
+  const [currentTime, setCurrentTime] = useState<Date | null>(null);
 
   // Mettre à jour l'heure toutes les secondes
   useEffect(() => {
@@ -82,15 +73,7 @@ export default function ParticipantQueue() {
           <div className="flex items-center space-x-4">
             <Button
               variant="outline"
-              className="border-purple-500/30 text-purple-300 hover:bg-purple-500/20 hover:text-white"
-              onClick={() => window.location.reload()}
-            >
-              <RefreshCw className="h-4 w-4 mr-2" />
-              Actualiser
-            </Button>
-            <Button
-              variant="outline"
-              className="border-purple-500/30 text-purple-300 hover:bg-purple-500/20 hover:text-white"
+              className="border-purple-500/30 bg-purple-500/10 bg-indigo-700 text-purple-300 hover:bg-purple-500/20 hover:text-white"
               onClick={() => (window.location.href = "/register")}
             >
               <ArrowLeft className="h-4 w-4 mr-2" />
@@ -186,7 +169,7 @@ export default function ParticipantQueue() {
             <CardContent className="p-4 text-center">
               <Star className="h-8 w-8 text-pink-400 mx-auto mb-2" />
               <p className="text-2xl font-bold text-white">
-                {currentTime.toLocaleTimeString()}
+                {currentTime && currentTime.toLocaleTimeString()}
               </p>
               <p className="text-pink-200 text-sm">Heure actuelle</p>
             </CardContent>

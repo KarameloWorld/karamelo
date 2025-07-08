@@ -17,6 +17,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
+import { useCustomAlert } from "@/components/custom-alert";
 
 interface Event {
   name: string;
@@ -36,6 +37,7 @@ interface AddEventFormProps {
 
 export default function AddEventForm({ onClose, onSave }: AddEventFormProps) {
   const [isLoading, setIsLoading] = useState(false);
+  const { showAlert, AlertComponent } = useCustomAlert();
   const [eventData, setEventData] = useState({
     name: "",
     date: "",
@@ -77,8 +79,17 @@ export default function AddEventForm({ onClose, onSave }: AddEventFormProps) {
       console.log("Soirée créée:", eventData);
 
       // Redirection vers le dashboard
-      alert("Soirée créée avec succès ! 🎉");
-      window.location.href = "/dashboard";
+      showAlert(
+        "success",
+        "Soirée créée avec succès ! 🎉",
+        "Votre soirée a été créée et est maintenant disponible dans le dashboard.",
+        {
+          confirmText: "Voir le dashboard",
+          onConfirm: () => {
+            window.location.href = "/";
+          },
+        },
+      );
     }, 2000);
   };
 
@@ -334,6 +345,8 @@ export default function AddEventForm({ onClose, onSave }: AddEventFormProps) {
           </CardContent>
         </Card>
       </div>
+
+      <AlertComponent />
     </div>
   );
 }

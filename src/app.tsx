@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
-import Login from "./login";
-import Dashboard from "./dashboard";
-import AddSongForm from "./add-song-form";
-import { useAuth } from "../auth";
+import BarLogin from "./components/business/login";
+import Dashboard from "./components/business/dashboard";
+import AddSongForm from "./components/business/add-song-form";
+import ParticipantQueue from "./components/business/participant-queue";
+import ParticipantRegistration from "./components/business/participant-registration";
+import { useAuth } from "./components/auth";
 
 export default function App() {
   const [currentRoute, setCurrentRoute] = useState(window.location.pathname);
@@ -20,31 +22,33 @@ export default function App() {
   // Redirection automatique si authentifié et sur la page de login
   useEffect(() => {
     if (isAuthenticated() && currentRoute === "/") {
-      window.history.pushState({}, "", "/dashboard");
-      setCurrentRoute("/dashboard");
+      window.history.pushState({}, "", "/");
+      setCurrentRoute("/");
     }
   }, [isAuthenticated, currentRoute]);
 
   // Protection des routes
   const renderRoute = () => {
     if (!isAuthenticated() && currentRoute !== "/") {
-      return <Login />;
+      return <BarLogin />;
     }
 
     switch (currentRoute) {
       case "/":
-        return isAuthenticated() ? <Dashboard /> : <Login />;
-      case "/dashboard":
-        return <Dashboard />;
+        return isAuthenticated() ? <Dashboard /> : <BarLogin />;
       case "/add-song":
         return (
           <AddSongForm
             onClose={() => {
-              window.history.pushState({}, "", "/dashboard");
-              setCurrentRoute("/dashboard");
+              window.history.pushState({}, "", "/");
+              setCurrentRoute("/");
             }}
           />
         );
+      case "/participant-queue":
+        return <ParticipantQueue />;
+      case "/register":
+        return <ParticipantRegistration />;
       default:
         return <Dashboard />;
     }

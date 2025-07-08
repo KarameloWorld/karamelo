@@ -7,7 +7,7 @@ describe("LoginHelper Component", () => {
     render(<LoginHelper />);
 
     expect(screen.getByText("🏪 Connexion Bar")).toBeInTheDocument();
-    expect(screen.getByText("bar@karaobar.com")).toBeInTheDocument();
+    expect(screen.getByText("bar@karamelo.com")).toBeInTheDocument();
     expect(screen.getByText("bar123")).toBeInTheDocument();
   });
 
@@ -15,7 +15,7 @@ describe("LoginHelper Component", () => {
     render(<LoginHelper />);
 
     expect(screen.getByText("👑 Connexion Admin")).toBeInTheDocument();
-    expect(screen.getByText("admin@karaobar.com")).toBeInTheDocument();
+    expect(screen.getByText("admin@karamelo.com")).toBeInTheDocument();
     expect(screen.getByText("admin123")).toBeInTheDocument();
   });
 

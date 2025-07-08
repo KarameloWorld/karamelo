@@ -41,7 +41,7 @@ test.describe("Accessibility Tests", () => {
     await expect(page.getByLabel("Email")).toBeFocused();
 
     // Fill email with keyboard
-    await page.keyboard.type("bar@karaobar.com");
+    await page.keyboard.type("bar@karamelo.com");
 
     // Tab to password
     await page.keyboard.press("Tab");
